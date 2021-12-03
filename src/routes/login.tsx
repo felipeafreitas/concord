@@ -7,6 +7,7 @@ import AuthenticationCard from '../components/AuthenticationCard'
 
 function Login() {
   return (
+    <>
     <AuthenticationCard>
       <Box textAlign="left" marginBottom="27px">
         <h1>Login</h1>
@@ -24,6 +25,7 @@ function Login() {
       </Wrap>
       <Button colorScheme='blue' width="100%" marginBottom="31px">Login</Button>
     </AuthenticationCard>
+    </>
   )
 }
 

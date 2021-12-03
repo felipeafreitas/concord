@@ -10,8 +10,8 @@ type Props = {
 
 function Layout({children}: Props) {
   return (
-    <Box textAlign="center" fontSize="xl" alignContent="center" alignItems="center">
-      <Grid minH="100vh" p={3}>
+    <Box textAlign="center" fontSize="xl">
+      <Grid minH="100vh" p={3} >
         <ColorModeSwitcher justifySelf="flex-end" />
         {children}
       </Grid>
