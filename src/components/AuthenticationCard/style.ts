@@ -6,6 +6,9 @@ export const SocialButton = styled.button`
   background: transparent;
   border-radius: 50%;
   border: 1px solid #828282;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 export const LogoText = styled.span`

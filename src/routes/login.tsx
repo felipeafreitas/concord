@@ -1,8 +1,7 @@
-import { Input, Button, Box, Wrap, Spacer, InputGroup, InputLeftElement } from '@chakra-ui/react'
+import { Input, Button, Box, Wrap, Spacer, InputGroup, InputLeftElement, Text } from '@chakra-ui/react'
 
 import { EmailIcon, LockIcon } from '@chakra-ui/icons'
 
-import React from 'react'
 import AuthenticationCard from '../components/AuthenticationCard'
 
 function Login() {
@@ -10,7 +9,7 @@ function Login() {
     <>
     <AuthenticationCard>
       <Box textAlign="left" marginBottom="27px">
-        <h1>Login</h1>
+        <Text fontWeight="900">Login</Text>
       </Box>
       <Spacer />
       <Wrap spacing="14px" marginBottom="22px" display="flex">

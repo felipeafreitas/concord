@@ -1,7 +1,11 @@
-import { Container, Box, Wrap, Image, Text } from '@chakra-ui/react'
+import { Container, Box, Wrap, Image, Text, Link } from '@chakra-ui/react'
 import { SocialButton, LogoText } from './style'
 
-import DevChallengeIcon from '../../assets/img/devchallenges.png'
+
+import { AiOutlineGoogle, AiFillFacebook, AiOutlineTwitter, AiFillGithub } from 'react-icons/ai'
+
+import Logo from '../Logo'
+import Signature from '../Signature'
 
 type Props = {
   children: any;
@@ -9,30 +13,32 @@ type Props = {
 
 function AuthenticationCard({children}: Props) {
   return (
-    <Container maxW="md">
+    <Container maxW="473px">
     <Container borderWidth='1px' borderRadius='lg' padding="48px 58px" >
       <Box display="flex" flexDirection="column" justifyContent="center">
-        <Box display="flex" flexDirection="row" marginBottom="28px" alignItems="center" gridGap="5px">
-          <Image src={DevChallengeIcon} />
-          <LogoText>devchallenges</LogoText>
-        </Box>
+        <Logo />
         {children}
         <Box justifyContent="center" marginBottom="33px">
-          <Text marginBottom="22px">or continue with these social profile</Text>
+          <Text marginBottom="22px" fontSize="sm">or continue with these social profile</Text>
           <Box display="flex" flexDirection="row" gridGap="15px" justifyContent="center">
-            <SocialButton />
-            <SocialButton />
-            <SocialButton />
-            <SocialButton />
+            <SocialButton>
+              <AiOutlineGoogle />
+            </SocialButton>
+            <SocialButton>
+              <AiFillFacebook />
+            </SocialButton>
+            <SocialButton>
+              <AiOutlineTwitter />
+            </SocialButton>
+            <SocialButton>
+              <AiFillGithub />
+            </SocialButton>
           </Box>
         </Box>
-        <span>Don’t have an account yet? <a href="/#">Register</a></span>
+        <Text fontSize="sm">Don’t have an account yet? <Link color='teal.500' href='#'>Register</Link></Text>
       </Box>
     </Container>
-      <Box marginTop="10px" display="flex" justifyContent="space-between">
-        <span>created by username</span>
-        <span>devChallenges.io</span>
-      </Box>
+      <Signature />
     </Container>
   )
 }
