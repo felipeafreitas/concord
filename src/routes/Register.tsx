@@ -1,26 +1,49 @@
-import { Input, Button, Box, Wrap, Spacer, InputGroup, InputLeftElement, Text, FormErrorMessage, FormControl } from '@chakra-ui/react'
+import { 
+  Input, 
+  Button, 
+  Box, 
+  Wrap, 
+  Spacer, 
+  InputGroup, 
+  InputLeftElement, 
+  Text, 
+  FormErrorMessage, 
+  FormControl, 
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure, } from '@chakra-ui/react'
 
 import { EmailIcon, LockIcon } from '@chakra-ui/icons'
 
 import AuthenticationCard from '../components/AuthenticationCard'
 import { Field, Form, Formik } from 'formik';
 import api from '../api';
+import { useNavigate } from 'react-router';
 
 function Register() {
-const submit = (values: any) => {
-  try {
-    const response = api.post('/register', {
-      body: values
-    })
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  let navigate = useNavigate();
 
-    console.log(response)
-  } catch(err) {
-    console.log(err)
+  const submit = (values: any) => {
+    try {
+      const response = api.post('/register', {
+        body: values
+      })
+      console.log(response)
+      navigate('/profile');
+    } catch(err) {
+      onOpen()
+      console.log(err)
+    }
   }
-  console.log(values)
-}
 
   return (
+    <>
     <AuthenticationCard>
       <Box textAlign="left" marginBottom="27px">
       <Text marginBottom="15px" fontWeight="600" fontSize="18px">Join thousands of learners from around the world</Text>
@@ -39,9 +62,7 @@ const submit = (values: any) => {
         }}
         validate={values => {
           const errors = {} as any
-          if (!values.email) {
-            errors.email = 'Required';
-          } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+          if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
           ) {
             errors.email = 'Invalid email address';
           } else if (values.password.length < 6) {
@@ -57,7 +78,12 @@ const submit = (values: any) => {
               {({ field, form }: any) => (
                 <FormControl isInvalid={form.errors.name && form.touched.name} display="flex" flexDirection="column">
                   <InputGroup flexDirection="column">
-                    <Input {...field} id="name" placeholder="name"/>
+                    <Input 
+                      {...field} 
+                      id="name" 
+                      placeholder="Name" 
+                      isRequired 
+                    />
                     <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                   </InputGroup>
                 </FormControl>
@@ -68,7 +94,12 @@ const submit = (values: any) => {
                 <FormControl isInvalid={form.errors.email && form.touched.email}>
                   <InputGroup flexDirection="column">
                     <InputLeftElement children={<EmailIcon />} />
-                    <Input {...field} id="email" placeholder="Email"/>
+                    <Input 
+                      {...field} 
+                      id="email" 
+                      placeholder="Email"
+                      isRequired
+                    />
                     <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                   </InputGroup>
                 </FormControl>
@@ -79,7 +110,13 @@ const submit = (values: any) => {
                 <FormControl isInvalid={form.errors.password && form.touched.password}>
                     <InputGroup flexDirection="column">
                       <InputLeftElement children={<LockIcon />} />
-                      <Input Input {...field} id="password" placeholder="Password"type="password"/>
+                      <Input 
+                        Input {...field} 
+                        id="password" 
+                        placeholder="Password"
+                        type="password" 
+                        isRequired
+                      />
                       <FormErrorMessage>{form.errors.password}</FormErrorMessage>
                     </InputGroup>
                 </FormControl>
@@ -99,6 +136,21 @@ const submit = (values: any) => {
         )}
       </Formik>
     </AuthenticationCard>
+    <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Modal Title</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={onClose}>
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   )
 }
 
