@@ -2,6 +2,7 @@ import { Box, Container, Text } from '@chakra-ui/react'
 import Signature from '../../components/Signature'
 
 import ProfileCard from '../../components/ProfileCard'
+import WithAuth from '../../hocs/WithAuth'
 
 function Profile() {
   return (

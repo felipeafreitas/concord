@@ -1,3 +1,5 @@
+import WithAuth from "../hocs/WithAuth"
+
 function Chat() {
   return (
     <div>
