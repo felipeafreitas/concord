@@ -7,7 +7,7 @@ import Chat from "./routes/Chat"
 import Login from "./routes/Login"
 import Profile from "./routes/Profile"
 import EditProfile from "./routes/Profile/Edit"
-import SignUp from "./routes/SignUp"
+import Register from "./routes/Register"
 
 ReactDOM.render(
   <React.StrictMode>
@@ -17,7 +17,7 @@ ReactDOM.render(
         <Routes>
           <Route path="/" element={<App />}>
             <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/edit" element={<EditProfile />} />
             <Route path="/chat" element={<Chat />} />

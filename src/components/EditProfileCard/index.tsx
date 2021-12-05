@@ -1,5 +1,5 @@
 import { Button } from '@chakra-ui/button'
-import { Container, Box, Image, Text, Input, Grid } from '@chakra-ui/react'
+import { Container, Box, Image, Text, Input, Grid, Textarea } from '@chakra-ui/react'
 
 import ProfilePic from '../../assets/img/profile.jpeg'
 
@@ -21,7 +21,7 @@ function EditProfileCard() {
         </Box>
         <Box>
           <Text>Bio</Text>
-          <Input placeholder="Enter your bio..."/>
+          <Textarea placeholder="Enter your bio..."/>
         </Box>
         <Box>
           <Text>Phone</Text>
