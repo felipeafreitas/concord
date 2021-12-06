@@ -9,6 +9,7 @@ import {
   Text,
   FormControl,
   FormErrorMessage,
+  Link,
 } from '@chakra-ui/react';
 
 import { EmailIcon, LockIcon } from '@chakra-ui/icons';
@@ -17,6 +18,7 @@ import AuthenticationCard from '../components/AuthenticationCard';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import { Field, Form, Formik } from 'formik';
+import SocialLogin from '../components/SocialLogin';
 
 function Login() {
   let navigate = useNavigate();
@@ -125,6 +127,13 @@ function Login() {
             )}
           </Formik>
         </Wrap>
+        <SocialLogin />
+        <Text fontSize='sm'>
+          Don’t have an account yet?{' '}
+          <Link color='teal.500' onClick={() => navigate('/register')}>
+            Register
+          </Link>
+        </Text>
       </AuthenticationCard>
     </>
   );

@@ -17,6 +17,7 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
+  Link,
 } from '@chakra-ui/react';
 
 import { EmailIcon, LockIcon } from '@chakra-ui/icons';
@@ -25,6 +26,7 @@ import AuthenticationCard from '../components/AuthenticationCard';
 import { Field, Form, Formik } from 'formik';
 import api from '../api';
 import { useNavigate } from 'react-router';
+import SocialLogin from '../components/SocialLogin';
 
 function Register() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -131,7 +133,6 @@ function Register() {
                       <InputGroup flexDirection='column'>
                         <InputLeftElement children={<LockIcon />} />
                         <Input
-                          Input
                           {...field}
                           id='password'
                           placeholder='Password'
@@ -158,6 +159,13 @@ function Register() {
             </Form>
           )}
         </Formik>
+        <SocialLogin />
+        <Text fontSize='sm'>
+          Already a member?{' '}
+          <Link color='teal.500' onClick={() => navigate('/login')}>
+            Login
+          </Link>
+        </Text>
       </AuthenticationCard>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

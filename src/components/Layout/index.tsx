@@ -1,11 +1,15 @@
 import { Box, Grid } from '@chakra-ui/react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
 import Logo from '../Logo';
 import MenuDropdown from '../MenuDropdown';
 
 function Layout() {
-  const signed = true;
+  const { pathname } = useLocation()
+
+  const noShowRoutes = ['/register', '/login']
+
+  const shouldShow = !noShowRoutes.includes(pathname)
 
   return (
     <Box textAlign='center' fontSize='xl'>
@@ -16,9 +20,9 @@ function Layout() {
           justifyContent='space-between'
           padding='20px'
         >
-          {signed ? <Logo /> : <div />}
+          {shouldShow ? <Logo /> : <div />}
           <Box display='flex' flexDirection='row'>
-            {signed && <MenuDropdown />}
+            {shouldShow && <MenuDropdown />}
             <ColorModeSwitcher />
           </Box>
         </Box>
