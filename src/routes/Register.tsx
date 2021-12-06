@@ -24,24 +24,24 @@ import { EmailIcon, LockIcon } from '@chakra-ui/icons';
 
 import AuthenticationCard from '../components/AuthenticationCard';
 import { Field, Form, Formik } from 'formik';
-import api from '../api';
 import { useNavigate } from 'react-router';
 import SocialLogin from '../components/SocialLogin';
+import useAuth from '../hooks/useAuth';
+import { User } from '../types/User';
 
 function Register() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   let navigate = useNavigate();
 
-  const submit = (values: any) => {
+  const { signin } = useAuth();
+
+  const submit = async (newUser: User) => {
     try {
-      const response = api.post('/register', {
-        body: values,
-      });
-      console.log(response);
-      navigate('/profile');
+      await signin(newUser);
+      // navigate('/profile');
     } catch (err) {
-      onOpen();
       console.log(err);
+      // onOpen();
     }
   };
 
@@ -172,7 +172,9 @@ function Register() {
         <ModalContent>
           <ModalHeader>Modal Title</ModalHeader>
           <ModalCloseButton />
-          <ModalBody></ModalBody>
+          <ModalBody>
+            Não foi possível criar uma nova conta. Tente Novamente
+          </ModalBody>
           <ModalFooter>
             <Button colorScheme='blue' mr={3} onClick={onClose}>
               Close

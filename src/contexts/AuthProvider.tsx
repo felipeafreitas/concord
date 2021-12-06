@@ -1,31 +1,32 @@
 import { createContext, useState } from 'react';
+import api from '../api';
+import { User } from '../types/User';
 
 interface AuthContextType {
-  user: any;
-  signin: (user: string, callback: VoidFunction) => void;
-  signout: (callback: VoidFunction) => void;
+  user: User;
+  signin: (user: User) => void;
+  signout: () => void;
 }
 
 export const AuthContext = createContext<AuthContextType>(null!);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  let [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User>({} as User);
 
-  let signin = (newUser: string, callback: VoidFunction) => {
-    // return fakeAuthProvider.signin(() => {
-    //   setUser(newUser);
-    //   callback();
-    // });
+  const signin = async (newUser: User) => {
+    try {
+      setUser(newUser);
+      return api.post('/register', newUser);
+    } catch (err) {
+      throw err;
+    }
   };
 
-  let signout = (callback: VoidFunction) => {
-    // return fakeAuthProvider.signout(() => {
-    //   setUser(null);
-    //   callback();
-    // });
+  const signout = () => {
+    localStorage.clear();
   };
 
-  let value = { user, signin, signout };
+  const value = { user, signin, signout };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
