@@ -1,13 +1,12 @@
-import { Box, Text } from '@chakra-ui/react'
-import React from 'react'
+import { Box, Text } from '@chakra-ui/react';
 
 function Signature() {
   return (
-    <Box marginTop="10px" display="flex" justifyContent="space-between">
-      <Text fontSize="sm">created by Felipe Freitas</Text>
-      <Text fontSize="sm">devChallenges.io</Text>
+    <Box marginTop='10px' display='flex' justifyContent='space-between'>
+      <Text fontSize='sm'>created by Felipe Freitas</Text>
+      <Text fontSize='sm'>devChallenges.io</Text>
     </Box>
-  )
+  );
 }
 
-export default Signature
+export default Signature;

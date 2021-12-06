@@ -1,13 +1,13 @@
 import { Navigate, useLocation } from 'react-router-dom';
 
-function RequireAuth({children}: { children: JSX.Element }) {
-  let location = useLocation()
+function RequireAuth({ children }: { children: JSX.Element }) {
+  let location = useLocation();
 
   if (!localStorage.getItem('token')) {
-    return <Navigate to="/login" state={{ from: location }} />;
+    return <Navigate to='/login' state={{ from: location }} />;
   }
 
-  return children
+  return children;
 }
 
-export default RequireAuth
+export default RequireAuth;

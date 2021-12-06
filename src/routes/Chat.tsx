@@ -1,13 +1,11 @@
-import RequireAuth from "../hocs/RequireAuth"
+import RequireAuth from '../hocs/RequireAuth';
 
 function Chat() {
   return (
     <RequireAuth>
-      <div>
-        
-      </div>
+      <div></div>
     </RequireAuth>
-  )
+  );
 }
 
-export default Chat
+export default Chat;

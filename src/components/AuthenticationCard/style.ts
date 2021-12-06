@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const SocialButton = styled.button`
   width: 42px;
@@ -9,8 +9,8 @@ export const SocialButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 
 export const LogoText = styled.span`
   font-weight: 600;
-`
+`;
