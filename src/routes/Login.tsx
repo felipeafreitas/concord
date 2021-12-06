@@ -29,7 +29,7 @@ function Login() {
         <Text fontWeight="900">Login</Text>
       </Box>
       <Spacer />
-      {/* <Wrap spacing="14px" marginBottom="22px" display="flex"> */}
+      <Wrap spacing="14px" marginBottom="22px" display="flex">
       <Formik 
         onSubmit={async (values, actions) => {
           await login(values);
@@ -73,7 +73,7 @@ function Login() {
                     <InputGroup flexDirection="column">
                       <InputLeftElement children={<LockIcon />} />
                       <Input 
-                        Input {...field} 
+                        {...field} 
                         id="password" 
                         placeholder="Password"
                         type="password" 
@@ -97,7 +97,7 @@ function Login() {
         </Form>
         )}
       </Formik>
-      {/* </Wrap> */}
+      </Wrap>
     </AuthenticationCard>
     </>
   )

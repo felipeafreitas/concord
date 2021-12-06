@@ -1,4 +1,5 @@
 import { Box, Grid } from "@chakra-ui/react"
+import { Outlet } from "react-router-dom";
 import { ColorModeSwitcher } from "../../ColorModeSwitcher"
 import Logo from "../Logo";
 import MenuDropdown from "../MenuDropdown"
@@ -7,7 +8,7 @@ type Props = {
   children: any;
 }
 
-function Layout({children}: Props) {
+function Layout() {
   const signed = true;
 
   return (
@@ -20,7 +21,7 @@ function Layout({children}: Props) {
             <ColorModeSwitcher />
           </Box>
         </Box>
-        {children}
+        <Outlet />
       </Grid>
     </Box> 
   )

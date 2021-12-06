@@ -1,10 +1,12 @@
-import WithAuth from "../hocs/WithAuth"
+import RequireAuth from "../hocs/RequireAuth"
 
 function Chat() {
   return (
-    <div>
-      
-    </div>
+    <RequireAuth>
+      <div>
+        
+      </div>
+    </RequireAuth>
   )
 }
 
