@@ -13,9 +13,14 @@ import {
 import { Link } from 'react-router-dom';
 
 import ProfilePic from '../../assets/img/profile.jpeg';
+import useAuth from '../../hooks/useAuth';
 import { Description, Title } from './styles';
 
 function ProfileCard() {
+  const { user } = useAuth();
+
+  console.log(user);
+
   return (
     <Container borderWidth='1px' borderRadius='lg'>
       <Table variant='simple'>

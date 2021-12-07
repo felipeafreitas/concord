@@ -1,9 +1,10 @@
+import { AxiosResponse } from 'axios';
 import { createContext, useEffect, useState } from 'react';
 import api from '../api';
 import { User } from '../types/User';
 
 interface AuthContextType {
-  user: User;
+  user: AxiosResponse<User>;
   signin: (user: User) => void;
   signout: () => void;
   retrieve: () => void;
@@ -12,11 +13,12 @@ interface AuthContextType {
 export const AuthContext = createContext<AuthContextType>(null!);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User>({} as User);
+  const [user, setUser] = useState<AxiosResponse<User>>(
+    {} as AxiosResponse<User>
+  );
 
   const signin = async (newUser: User) => {
     try {
-      setUser(newUser);
       return api.post('/register', newUser);
     } catch (err) {
       throw err;
@@ -30,16 +32,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const retrieve = async () => {
     const token = localStorage.getItem('token');
 
-    try {
-      const user = await api.get<User>('/user', token);
-      setUser(user as User);
-    } catch (err) {
-      throw err;
+    if (token) {
+      try {
+        const user = await api.get<User>(`/user/${token}`);
+        setUser(user);
+      } catch (err) {
+        throw err;
+      }
     }
   };
 
   useEffect(() => {
-    if (!!localStorage.getItem('token') && !user) {
+    if (!!localStorage.getItem('token')) {
       retrieve();
     }
   }, []);

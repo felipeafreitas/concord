@@ -30,13 +30,11 @@ function Login() {
   const login = async (credentials: User) => {
     try {
       const { data } = await api.post('/login', credentials);
-      console.log(data);
 
       if (data.status === 'error') {
-        console.log('error ');
         setError(true);
       } else {
-        localStorage.setItem('token', data);
+        localStorage.setItem('token', data.token);
         navigate('/profile');
       }
     } catch (err) {
