@@ -23,7 +23,7 @@ function MenuDropdown() {
 
   const logout = () => {
     signout();
-    navigate('/login');
+    navigate('/');
   };
 
   return (
@@ -44,7 +44,7 @@ function MenuDropdown() {
         />
         <MenuButton as={Button} variant='ghost'>
           <Text fontWeight='700' fontSize='12px'>
-            {user.name} <TriangleDownIcon marginLeft='20px' />
+            {user?.name} <TriangleDownIcon marginLeft='20px' />
           </Text>
         </MenuButton>
         <MenuList>

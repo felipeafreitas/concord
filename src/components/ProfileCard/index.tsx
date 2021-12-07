@@ -19,11 +19,9 @@ import { Description, Title } from './styles';
 function ProfileCard() {
   const { user } = useAuth();
 
-  console.log(user);
-
   return (
     <Container borderWidth='1px' borderRadius='lg'>
-      <Table variant='simple'>
+      <Table variant='simple' size="lg">
         <TableCaption placement='top'>
           <Box
             display='flex'

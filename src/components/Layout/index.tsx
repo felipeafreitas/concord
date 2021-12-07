@@ -5,15 +5,15 @@ import Logo from '../Logo';
 import MenuDropdown from '../MenuDropdown';
 
 function Layout() {
-  const { pathname } = useLocation()
+  const { pathname } = useLocation();
 
-  const noShowRoutes = ['/register', '/login']
+  const noShowRoutes = ['/register', '/'];
 
-  const shouldShow = !noShowRoutes.includes(pathname)
+  const shouldShow = !noShowRoutes.includes(pathname);
 
   return (
     <Box textAlign='center' fontSize='xl'>
-      <Grid minH='100vh' p={3}>
+      <Grid minH='100vh'>
         <Box
           display='flex'
           alignItems='flex-start'

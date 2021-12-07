@@ -20,10 +20,13 @@ import api from '../api';
 import { Field, Form, Formik } from 'formik';
 import SocialLogin from '../components/SocialLogin';
 import { User } from '../types/User';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import useAuth from '../hooks/useAuth';
 
 function Login() {
   let navigate = useNavigate();
+
+  const { retrieve } = useAuth();
 
   const [error, setError] = useState(false);
 
@@ -35,12 +38,19 @@ function Login() {
         setError(true);
       } else {
         localStorage.setItem('token', data.token);
+        retrieve();
         navigate('/profile');
       }
     } catch (err) {
       setError(true);
     }
   };
+
+  useEffect(() => {
+    if (!!localStorage.getItem('token')) {
+      navigate('/profile');
+    }
+  }, []);
 
   return (
     <>
@@ -90,7 +100,9 @@ function Login() {
                             placeholder='Email'
                             isRequired
                           />
-                          {error && <Text></Text>}
+                          <FormErrorMessage>
+                            {form.errors.email}
+                          </FormErrorMessage>
                         </InputGroup>
                       </FormControl>
                     )}
@@ -131,6 +143,11 @@ function Login() {
               </Form>
             )}
           </Formik>
+          {error && (
+            <Text color='red.500' fontSize='sm'>
+              Email/password invalid
+            </Text>
+          )}
         </Wrap>
         <SocialLogin />
         <Text fontSize='sm'>

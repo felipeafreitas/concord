@@ -4,7 +4,7 @@ function RequireAuth({ children }: { children: JSX.Element }) {
   let location = useLocation();
 
   if (!localStorage.getItem('token')) {
-    return <Navigate to='/login' state={{ from: location }} />;
+    return <Navigate to='/' state={{ from: location }} />;
   }
 
   return children;

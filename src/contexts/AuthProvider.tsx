@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import { createContext, useEffect, useState } from 'react';
 import api from '../api';
 import { User } from '../types/User';
@@ -13,7 +12,7 @@ interface AuthContextType {
 export const AuthContext = createContext<AuthContextType>(null!);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<User>();
 
   const signin = async (newUser: User) => {
     try {
@@ -24,9 +23,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signout = () => {
+    setUser({} as User);
     localStorage.clear();
   };
 
+  // TODO: Implement SWR
   const retrieve = async () => {
     const token = localStorage.getItem('token');
 
@@ -41,10 +42,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    if (!!localStorage.getItem('token')) {
+    if (!!localStorage.getItem('token') && !user) {
       retrieve();
     }
-  }, []);
+  }, [user]);
 
   const value = { user, signin, signout, retrieve };
 
