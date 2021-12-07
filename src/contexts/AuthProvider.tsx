@@ -4,7 +4,7 @@ import api from '../api';
 import { User } from '../types/User';
 
 interface AuthContextType {
-  user: AxiosResponse<User>;
+  user: any;
   signin: (user: User) => void;
   signout: () => void;
   retrieve: () => void;
@@ -13,9 +13,7 @@ interface AuthContextType {
 export const AuthContext = createContext<AuthContextType>(null!);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<AxiosResponse<User>>(
-    {} as AxiosResponse<User>
-  );
+  const [user, setUser] = useState();
 
   const signin = async (newUser: User) => {
     try {
@@ -34,8 +32,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     if (token) {
       try {
-        const user = await api.get<User>(`/user/${token}`);
-        setUser(user);
+        const { data } = await api.get(`/user/${token}`);
+        setUser(data.user);
       } catch (err) {
         throw err;
       }

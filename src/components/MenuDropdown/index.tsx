@@ -18,7 +18,7 @@ import userPic from '../../assets/img/profile.jpeg';
 import useAuth from '../../hooks/useAuth';
 
 function MenuDropdown() {
-  const { signout } = useAuth();
+  const { signout, user } = useAuth();
   const navigate = useNavigate();
 
   const logout = () => {
@@ -44,7 +44,7 @@ function MenuDropdown() {
         />
         <MenuButton as={Button} variant='ghost'>
           <Text fontWeight='700' fontSize='12px'>
-            Xanthe Neal <TriangleDownIcon marginLeft='20px' />
+            {user.name} <TriangleDownIcon marginLeft='20px' />
           </Text>
         </MenuButton>
         <MenuList>

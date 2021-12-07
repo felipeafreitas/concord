@@ -57,7 +57,7 @@ function ProfileCard() {
               <Title>NAME</Title>
             </Td>
             <Td>
-              <Description>Xanthe Neal</Description>
+              <Description>{user?.name}</Description>
             </Td>
           </Tr>
           <Tr>
@@ -65,9 +65,7 @@ function ProfileCard() {
               <Title>BIO</Title>
             </Td>
             <Td>
-              <Description>
-                I am a software developer and a big fan of devchallenges...
-              </Description>
+              <Description>{user?.bio}</Description>
             </Td>
           </Tr>
           <Tr>
@@ -75,7 +73,7 @@ function ProfileCard() {
               <Title>PHONE</Title>
             </Td>
             <Td>
-              <Description>908249274292</Description>
+              <Description>{user?.phone}</Description>
             </Td>
           </Tr>
           <Tr>
@@ -83,7 +81,7 @@ function ProfileCard() {
               <Title>EMAIL</Title>
             </Td>
             <Td>
-              <Description>xanthe.neal@gmail.com</Description>
+              <Description>{user?.email}</Description>
             </Td>
           </Tr>
           <Tr>
