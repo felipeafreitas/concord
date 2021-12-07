@@ -13,10 +13,19 @@ import {
 
 import { IoPersonCircle } from 'react-icons/io5';
 import { MdGroup, MdLogout } from 'react-icons/md';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import userPic from '../../assets/img/profile.jpeg';
+import useAuth from '../../hooks/useAuth';
 
 function MenuDropdown() {
+  const { signout } = useAuth();
+  const navigate = useNavigate();
+
+  const logout = () => {
+    signout();
+    navigate('/login');
+  };
+
   return (
     <Box
       display='flex'
@@ -46,9 +55,9 @@ function MenuDropdown() {
             <MenuItem icon={<MdGroup />}>Group Chat</MenuItem>
           </Link>
           <Divider />
-          <Link to='/logout'>
-            <MenuItem icon={<MdLogout />}>Logout</MenuItem>
-          </Link>
+          <MenuItem icon={<MdLogout />} onClick={logout}>
+            Logout
+          </MenuItem>
         </MenuList>
       </Menu>
     </Box>

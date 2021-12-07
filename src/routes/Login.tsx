@@ -19,19 +19,28 @@ import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import { Field, Form, Formik } from 'formik';
 import SocialLogin from '../components/SocialLogin';
+import { User } from '../types/User';
+import { useState } from 'react';
 
 function Login() {
   let navigate = useNavigate();
 
-  const login = async (values: any) => {
+  const [error, setError] = useState(false);
+
+  const login = async (credentials: User) => {
     try {
-      const response = await api.post('/login', {
-        body: values,
-      });
-      console.log(response);
-      navigate('/profile');
+      const { data } = await api.post('/login', credentials);
+      console.log(data);
+
+      if (data.status === 'error') {
+        console.log('error ');
+        setError(true);
+      } else {
+        localStorage.setItem('token', data);
+        navigate('/profile');
+      }
     } catch (err) {
-      console.log(err);
+      setError(true);
     }
   };
 
@@ -44,7 +53,7 @@ function Login() {
         <Spacer />
         <Wrap spacing='14px' marginBottom='22px' display='flex'>
           <Formik
-            onSubmit={async (values, actions) => {
+            onSubmit={async (values: User, actions) => {
               await login(values);
               actions.setSubmitting(false);
             }}
@@ -83,9 +92,7 @@ function Login() {
                             placeholder='Email'
                             isRequired
                           />
-                          <FormErrorMessage>
-                            {form.errors.email}
-                          </FormErrorMessage>
+                          {error && <Text></Text>}
                         </InputGroup>
                       </FormControl>
                     )}

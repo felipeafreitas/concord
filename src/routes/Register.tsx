@@ -38,10 +38,9 @@ function Register() {
   const submit = async (newUser: User) => {
     try {
       await signin(newUser);
-      // navigate('/profile');
+      navigate('/login');
     } catch (err) {
-      console.log(err);
-      // onOpen();
+      onOpen();
     }
   };
 
