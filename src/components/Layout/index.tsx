@@ -7,7 +7,7 @@ import MenuDropdown from '../MenuDropdown';
 function Layout() {
   const { pathname } = useLocation();
 
-  const noShowRoutes = ['/register', '/'];
+  const noShowRoutes = ['/register', '/', '/chat'];
 
   const shouldShow = !noShowRoutes.includes(pathname);
 

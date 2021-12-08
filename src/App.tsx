@@ -9,13 +9,13 @@ import Register from './routes/Register';
 export const App = () => (
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route path='/' element={<Layout />}>
         <Route index element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/profile/edit' element={<EditProfile />} />
-        <Route path='/chat' element={<Chat />} />
       </Route>
+      <Route path='/chat' element={<Chat />} />
     </Routes>
   </BrowserRouter>
 );

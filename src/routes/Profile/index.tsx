@@ -3,8 +3,14 @@ import Signature from '../../components/Signature';
 
 import ProfileCard from '../../components/ProfileCard';
 import RequireAuth from '../../hocs/RequireAuth';
+import useAuth from '../../hooks/useAuth';
+import Loader from '../../components/Loader';
 
 function Profile() {
+  const { user } = useAuth();
+
+  if (!user) return <Loader />;
+
   return (
     <RequireAuth>
       <Container>
