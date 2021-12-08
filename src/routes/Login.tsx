@@ -50,7 +50,7 @@ function Login() {
     if (!!localStorage.getItem('token')) {
       navigate('/profile');
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <>

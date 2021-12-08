@@ -251,6 +251,7 @@ function EditProfileCard() {
               </Button>
             </Form>
           )}
+          {error && <Text>Something went wrong</Text>}
         </Formik>
       </Grid>
     </Container>
