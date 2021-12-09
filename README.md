@@ -91,6 +91,6 @@ $ npm start
 
 ## Contact
 
-- Website [your-website.com](https://{your-web-site-link})
+- [LinkedIn](https://www.linkedin.com/in/affreitas/)
 - GitHub [@sincopeiro](https://github.com/sincopeiro)
 - Email: afelipe.freitas@gmail.com
