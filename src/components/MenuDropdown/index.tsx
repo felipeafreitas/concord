@@ -30,7 +30,6 @@ function MenuDropdown() {
     <Box
       display='flex'
       flexDirection='row'
-      marginBottom='28px'
       alignItems='center'
       gridGap='5px'
       justifySelf='left'
