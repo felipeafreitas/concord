@@ -17,11 +17,11 @@
     </a>
     <span> | </span>
     <a href="https://devchallenges.io/challenges/N1fvBjQfhlkctmwj1tnw">
-      Challenge 1 (Authentication App)
+      Challenge 1
     </a>
    <span> | </span>
     <a href="https://devchallenges.io/challenges/UgCqszKR7Q7oqb4kRfI0">
-      Challenge 2 (Chat Group)
+      Challenge 2
     </a>
   </h3>
 </div>
