@@ -1,6 +1,6 @@
 <!-- Please update value in the {}  -->
 
-<h1 align="center">Concord</h1>
+<h1 align="center">Concord Client</h1>
 
 <div align="center">
    Solution for a challenge from  <a href="http://devchallenges.io" target="_blank">Devchallenges.io</a>.
@@ -8,16 +8,20 @@
 
 <div align="center">
   <h3>
-    <a href="https://{your-demo-link.your-domain}">
+    <a href="https://concord-sincopeiro.netlify.app/">
       Demo
     </a>
     <span> | </span>
-    <a href="https://{your-url-to-the-solution}">
-      Solution
+    <a href="https://github.com/sincopeiro/concord-backend">
+      Server Repository
     </a>
     <span> | </span>
     <a href="https://devchallenges.io/challenges/N1fvBjQfhlkctmwj1tnw">
-      Challenge
+      Challenge 1
+    </a>
+   <span> | </span>
+    <a href="https://devchallenges.io/challenges/UgCqszKR7Q7oqb4kRfI0">
+      Challenge 2
     </a>
   </h3>
 </div>
@@ -27,7 +31,7 @@
 ## Table of Contents
 
 - [Overview](#overview)
-  - [Built With](#built-with)
+   - [Built With](#built-with)
 - [Features](#features)
 - [How to use](#how-to-use)
 - [Contact](#contact)
@@ -51,8 +55,12 @@ Introduce your projects by taking a screenshot or a gif. Try to tell visitors a 
 <!-- This section should list any major frameworks that you built your project using. Here are a few examples.-->
 
 - [React](https://reactjs.org/)
-- [Vue.js](https://vuejs.org/)
-- [Tailwind](https://tailwindcss.com/)
+- [Chakra UI](https://chakra-ui.com/)
+- [Styled Components](https://styled-components.com/)
+- [React Router](https://reactrouter.com/)
+- [Axios](https://axios-http.com/)
+
+
 
 ## Features
 
@@ -77,16 +85,12 @@ $ npm install
 $ npm start
 ```
 
-## Acknowledgements
+<!-- ## Acknowledgements -->
 
 <!-- This section should list any articles or add-ons/plugins that helps you to complete the project. This is optional but it will help you in the future. For example -->
 
-- [Steps to replicate a design with only HTML and CSS](https://devchallenges-blogs.web.app/how-to-replicate-design/)
-- [Node.js](https://nodejs.org/)
-- [Marked - a markdown parser](https://github.com/chjj/marked)
-
 ## Contact
 
-- Website [your-website.com](https://{your-web-site-link})
-- GitHub [@your-username](https://{github.com/your-usermame})
-- Twitter [@your-twitter](https://{twitter.com/your-username})
+- [LinkedIn](https://www.linkedin.com/in/affreitas/)
+- GitHub [@sincopeiro](https://github.com/sincopeiro)
+- Email: afelipe.freitas@gmail.com
