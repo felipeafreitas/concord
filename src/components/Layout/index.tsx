@@ -1,11 +1,13 @@
 import { Box, Grid } from '@chakra-ui/react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
+import useAuth from '../../hooks/useAuth';
 import Logo from '../Logo';
 import MenuDropdown from '../MenuDropdown';
 
 function Layout() {
   const { pathname } = useLocation();
+  const { user } = useAuth();
 
   const noShowRoutes = ['/register', '/', '/chat'];
 
@@ -22,7 +24,7 @@ function Layout() {
         >
           {shouldShow ? <Logo /> : <div />}
           <Box display='flex' flexDirection='row'>
-            {shouldShow && <MenuDropdown />}
+            {shouldShow && user && <MenuDropdown />}
             <ColorModeSwitcher />
           </Box>
         </Box>
