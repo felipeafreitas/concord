@@ -8,20 +8,88 @@ import {
   InputRightElement,
   InputGroup,
   Icon,
-  Divider,
 } from '@chakra-ui/react';
 import RequireAuth from '../hocs/RequireAuth';
 
 import { IoMdSend } from 'react-icons/io';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
-import userPic from '../assets/img/profile.jpeg';
 import SideTab from '../components/SideTab';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { io } from 'socket.io-client';
+import ChatMessage from '../components/ChatMessage';
+import { Message } from '../types/Message';
+import useAuth from '../hooks/useAuth';
+import { User } from '../types/User';
+
+import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
+import api from '../api';
+import { Room } from '../types/Room';
+const socket = io('http://localhost:9999');
 
 type Tabs = 'CurrentChannel' | 'AllChannels';
 
 function Chat() {
+  const { user }: { user: User } = useAuth();
+
+  let [searchParams, setSearchParams] = useSearchParams();
+
+  console.log(searchParams.get('room'));
+
   const [currentTab, setCurrentTab] = useState<Tabs>('AllChannels');
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([] as Message[]);
+  const [room, setRoom] = useState<Room>([] as Room);
+  const [rooms, setRooms] = useState<[Room]>();
+
+  useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        const response = api.get('/chat/rooms');
+        setRooms(response as [Room]);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchRooms();
+  });
+
+  useEffect(() => {
+    !!searchParams.get('room')
+      ? setRoom(searchParams.get('room') as string)
+      : setRoom('welcome');
+  }, [searchParams]);
+
+  socket.on('previous-messages', (messages) => {
+    console.log(messages);
+    setMessages(messages);
+  });
+
+  const joinRoom = (room: string) => {
+    socket.emit('join-room', room);
+  };
+
+  const handleMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMessage(e.target.value);
+  };
+
+  const sendMessage = () => {
+    const newMessage = {
+      message,
+      author: user._id as string,
+      timestamp: new Date(),
+    };
+    socket.emit('send-message', newMessage, room);
+    setMessages((prevState) => [...prevState, newMessage]);
+    setMessage('');
+  };
+
+  const displayMessage = ({ message, author, timestamp }: Message) => {
+    setMessages((prevState) => [...prevState, { message, author, timestamp }]);
+  };
+
+  socket.on('received-message', (message) => {
+    displayMessage(message);
+  });
 
   return (
     <RequireAuth>
@@ -45,54 +113,21 @@ function Chat() {
             </GridItem>
             <GridItem rowSpan={2} />
             <GridItem rowSpan={18} p='0px 22px 0px 70px'>
-              <Box
-                display='flex'
-                flexDirection='row'
-                marginBottom='20px'
-                alignItems='flex-start'
-              >
-                <Image
-                  src={userPic}
-                  borderRadius='lg'
-                  boxSize='42px'
-                  marginRight='28px'
+              {messages.map(({ message, timestamp, author }) => (
+                <ChatMessage
+                  message={message}
+                  key={message}
+                  timestamp={timestamp}
+                  author={author}
                 />
-                <Box>
-                  <Box
-                    display='flex'
-                    flexDirection='row'
-                    marginBottom='12px'
-                    alignItems='center'
-                  >
-                    <Text
-                      fontWeight='700'
-                      fontSize='18px'
-                      color='gray.100'
-                      marginRight='20px'
-                    >
-                      Felipe Freitas
-                    </Text>
-                    <Text fontWeight='500' fontSize='14px' color='gray.100'>
-                      yesterday at 2:29 AM
-                    </Text>
-                  </Box>
-                  <Text fontWeight='500' fontSize='18px' color='gray.100'>
-                    height: 32.016319274902344px; width: 886px; left:
-                    464.62158203125px; top: 188.140625px; border-radius: nullpx;
-                  </Text>
-                  <Stack
-                    flexDirection='row'
-                    alignItems='center'
-                    margin='40px 0px'
-                  >
-                    <Divider orientation='horizontal' />
-                    <Text margin='20px' whiteSpace='nowrap'>
-                      August 3, 2020
-                    </Text>
-                    <Divider orientation='horizontal' />
-                  </Stack>
-                </Box>
-              </Box>
+              ))}
+              <Stack flexDirection='row' alignItems='center' margin='40px 0px'>
+                {/* <Divider orientation='horizontal' />
+                <Text margin='20px' whiteSpace='nowrap'>
+                  August 3, 2020
+                </Text>
+                <Divider orientation='horizontal' /> */}
+              </Stack>
             </GridItem>
             <GridItem
               rowSpan={2}
@@ -106,9 +141,19 @@ function Chat() {
                   placeholder='Type a message here'
                   border='none'
                   bg='gray.600'
+                  value={message}
+                  onChange={handleMessage}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') sendMessage();
+                  }}
                 />
                 <InputRightElement width='3rem'>
-                  <Button size='md' boxSize='40px' bgColor='blue.500'>
+                  <Button
+                    size='md'
+                    boxSize='40px'
+                    bgColor='blue.500'
+                    onClick={sendMessage}
+                  >
                     <Icon as={IoMdSend} />
                   </Button>
                 </InputRightElement>

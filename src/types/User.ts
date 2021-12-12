@@ -4,4 +4,5 @@ export type User = {
   password: string;
   bio?: string;
   phone?: string;
+  _id?: string;
 };
