@@ -21,7 +21,7 @@ import { Message } from '../types/Message';
 import useAuth from '../hooks/useAuth';
 import { User } from '../types/User';
 
-import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import api from '../api';
 import { Room } from '../types/Room';
 const socket = io('http://localhost:9999');
@@ -33,40 +33,53 @@ function Chat() {
 
   let [searchParams, setSearchParams] = useSearchParams();
 
-  console.log(searchParams.get('room'));
-
   const [currentTab, setCurrentTab] = useState<Tabs>('AllChannels');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([] as Message[]);
-  const [room, setRoom] = useState<Room>([] as Room);
-  const [rooms, setRooms] = useState<[Room]>();
+  const [room, setRoom] = useState<Room>({} as Room);
+  const [rooms, setRooms] = useState<Room[]>([] as Room[]);
 
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        const response = api.get('/chat/rooms');
-        setRooms(response as [Room]);
+        const { data } = await api.get('/chat/rooms');
+        setRooms(data.data);
       } catch (err) {
         console.log(err);
       }
     };
     fetchRooms();
-  });
+  }, []);
 
   useEffect(() => {
-    !!searchParams.get('room')
-      ? setRoom(searchParams.get('room') as string)
-      : setRoom('welcome');
-  }, [searchParams]);
+    const urlRoom = searchParams.get('room');
 
-  socket.on('previous-messages', (messages) => {
-    console.log(messages);
-    setMessages(messages);
-  });
+    if (!!urlRoom && rooms.some((room) => room.name === urlRoom)) {
+      setRoom(rooms.find((room) => room.name === (urlRoom as string)) as Room);
+      joinRoom(urlRoom as string);
+    } else {
+      console.log('Joined Welcome Group');
+      setRoom(
+        rooms.find((room) => room.name.toLowerCase() === 'welcome') as Room
+      );
+    }
+  }, [searchParams, rooms]);
 
   const joinRoom = (room: string) => {
     socket.emit('join-room', room);
   };
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const { data } = await api.get(`/chat/${room.name}'/messages`);
+        setMessages(data.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchMessages();
+  }, [room]);
 
   const handleMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
@@ -76,15 +89,21 @@ function Chat() {
     const newMessage = {
       message,
       author: user._id as string,
-      timestamp: new Date(),
+      room: room.name,
     };
-    socket.emit('send-message', newMessage, room);
-    setMessages((prevState) => [...prevState, newMessage]);
+    socket.emit('send-message', newMessage);
+    setMessages((prevState) => [
+      ...prevState,
+      { ...newMessage, timestamp: new Date() },
+    ]);
     setMessage('');
   };
 
-  const displayMessage = ({ message, author, timestamp }: Message) => {
-    setMessages((prevState) => [...prevState, { message, author, timestamp }]);
+  const displayMessage = ({ message, author, timestamp, room }: Message) => {
+    setMessages((prevState) => [
+      ...prevState,
+      { message, author, timestamp, room },
+    ]);
   };
 
   socket.on('received-message', (message) => {
