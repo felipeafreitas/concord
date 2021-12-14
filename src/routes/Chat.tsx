@@ -18,13 +18,13 @@ import React, { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import ChatMessage from '../components/ChatMessage';
 import { Message } from '../types/Message';
-import useAuth from '../hooks/useAuth';
+
 import { User } from '../types/User';
 
 import { useSearchParams } from 'react-router-dom';
 import api from '../api';
 import { Room } from '../types/Room';
-const socket = io('http://localhost:9999');
+import useAuth from 'hooks/useAuth';
 
 type Tabs = 'CurrentChannel' | 'AllChannels';
 
@@ -33,11 +33,32 @@ function Chat() {
 
   let [searchParams, setSearchParams] = useSearchParams();
 
+  const [socket, setSocket] = useState<any>();
   const [currentTab, setCurrentTab] = useState<Tabs>('AllChannels');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([] as Message[]);
   const [room, setRoom] = useState<Room>({} as Room);
   const [rooms, setRooms] = useState<Room[]>([] as Room[]);
+
+  useEffect(() => {
+    // const newSocket = io(`${process.env.REACT_APP_SERVER}`);
+    const newSocket = io(`http://localhost:9999/`);
+
+    setSocket(newSocket);
+    return () => {
+      newSocket.close();
+    };
+  }, [setSocket]);
+
+  useEffect(() => {
+    if (socket) {
+      console.log('entrou no useeffect');
+      socket.on('received-message', (message: Message) => {
+        console.log('received message');
+        displayMessage(message);
+      });
+    }
+  }, [socket]);
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -54,25 +75,29 @@ function Chat() {
   useEffect(() => {
     const urlRoom = searchParams.get('room');
 
-    if (!!urlRoom && rooms.some((room) => room.name === urlRoom)) {
-      setRoom(rooms.find((room) => room.name === (urlRoom as string)) as Room);
-      joinRoom(urlRoom as string);
-    } else {
-      console.log('Joined Welcome Group');
-      setRoom(
-        rooms.find((room) => room.name.toLowerCase() === 'welcome') as Room
-      );
+    if (user) {
+      if (!!urlRoom && rooms.some((room) => room.name === urlRoom)) {
+        setRoom(
+          rooms.find((room) => room.name === (urlRoom as string)) as Room
+        );
+        joinRoom({ user: user._id as string, room: urlRoom as string });
+      } else {
+        setRoom(
+          rooms.find((room) => room.name.toLowerCase() === 'welcome') as Room
+        );
+        joinRoom({ user: user._id as string, room: 'welcome' });
+      }
     }
-  }, [searchParams, rooms]);
+  }, [searchParams, rooms, user]);
 
-  const joinRoom = (room: string) => {
+  const joinRoom = (room: { user: string; room: string }) => {
     socket.emit('join-room', room);
   };
 
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const { data } = await api.get(`/chat/${room.name}'/messages`);
+        const { data } = await api.get(`/chat/${room.name}/messages`);
         setMessages(data.data);
       } catch (err) {
         console.log(err);
@@ -106,10 +131,6 @@ function Chat() {
     ]);
   };
 
-  socket.on('received-message', (message) => {
-    displayMessage(message);
-  });
-
   return (
     <RequireAuth>
       <Grid templateColumns='repeat(10, 1fr)' minH='100vh'>
@@ -126,16 +147,16 @@ function Chat() {
               height='100%'
             >
               <Text fontWeight='700' fontSize='18px'>
-                FRONT-END DEVELOPERS
+                {room?.name?.toUpperCase()}
               </Text>
               <ColorModeSwitcher />
             </GridItem>
             <GridItem rowSpan={2} />
-            <GridItem rowSpan={18} p='0px 22px 0px 70px'>
+            <GridItem rowSpan={18} p='0px 22px 0px 70px' overflowY='scroll'>
               {messages.map(({ message, timestamp, author }) => (
                 <ChatMessage
                   message={message}
-                  key={message}
+                  key={String(timestamp)}
                   timestamp={timestamp}
                   author={author}
                 />
