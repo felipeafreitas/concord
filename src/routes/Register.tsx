@@ -33,15 +33,17 @@ function Register() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   let navigate = useNavigate();
 
-  const { signin } = useAuth();
+  const { signup } = useAuth();
 
   const submit = async (newUser: User) => {
     try {
-      await signin(newUser);
-      navigate('/login');
-    } catch (err) {
-      onOpen();
-    }
+      const { data } = await signup(newUser);
+      if (data.error) {
+        onOpen();
+      } else {
+        navigate('/');
+      }
+    } catch (err) {}
   };
 
   return (
@@ -161,7 +163,7 @@ function Register() {
         <SocialLogin />
         <Text fontSize='sm'>
           Already a member?{' '}
-          <Link color='teal.500' onClick={() => navigate('/login')}>
+          <Link color='teal.500' onClick={() => navigate('/')}>
             Login
           </Link>
         </Text>

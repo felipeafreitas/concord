@@ -30,6 +30,7 @@ function Chat() {
   const [messages, setMessages] = useState([] as Message[]);
   const [room, setRoom] = useState<Room>({} as Room);
   const [rooms, setRooms] = useState<Room[]>([] as Room[]);
+  const [invalidRoom, setInvalidRoom] = useState(false);
 
   useEffect(() => {
     const newSocket = io(`${process.env.REACT_APP_SERVER}`);
@@ -66,8 +67,13 @@ function Chat() {
       socket.emit('join-room', room);
     };
 
+    console.log(urlRoom);
+
     if (user && socket) {
-      if (!!urlRoom && rooms.some((room) => room.name === urlRoom)) {
+      if (!!urlRoom) {
+        if (!rooms.some((room) => room.name === urlRoom)) {
+          setInvalidRoom(true);
+        }
         setRoom(
           rooms.find((room) => room.name === (urlRoom as string)) as Room
         );
@@ -124,6 +130,8 @@ function Chat() {
         <Loader />
       </Grid>
     );
+  
+  if (invalidRoom) return <div>invalid Room</div>
 
   return (
     <RequireAuth>

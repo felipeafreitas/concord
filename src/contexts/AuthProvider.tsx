@@ -1,10 +1,11 @@
+import { AxiosResponse } from 'axios';
 import { createContext, useEffect, useState } from 'react';
 import api from '../api';
 import { User } from '../types/User';
 
 interface AuthContextType {
   user: any;
-  signin: (user: User) => void;
+  signup: (user: User) => Promise<AxiosResponse<any, any>>;
   signout: () => void;
   retrieve: () => void;
 }
@@ -14,7 +15,7 @@ export const AuthContext = createContext<AuthContextType>(null!);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User>();
 
-  const signin = async (newUser: User) => {
+  const signup = async (newUser: User): Promise<AxiosResponse<any, any>> => {
     try {
       return api.post('/register', newUser);
     } catch (err) {
@@ -47,7 +48,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, [user]);
 
-  const value = { user, signin, signout, retrieve };
+  const value = { user, signup, signout, retrieve };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
