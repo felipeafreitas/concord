@@ -13,7 +13,11 @@ function Loader() {
   };
 
   return (
-    <Box>
+    <Box
+      display='flex'
+      justifyContent='center'
+      alignItems='center'
+    >
       <Lottie options={defaultOptions} height={400} width={400} />
     </Box>
   );

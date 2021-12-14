@@ -11,31 +11,20 @@ import MenuDropdown from '../../MenuDropdown';
 
 import { FaChevronLeft } from 'react-icons/fa';
 import userPic from '../../../assets/img/profile.jpeg';
+import { Room } from 'types/Room';
+import { SidebarStatus } from 'types/SidebarStatus';
 
-function ChannelTab() {
-  const users = [
-    {
-      name: 'Mano Brown',
-    },
-    {
-      name: 'Aghata Cristie',
-    },
-    {
-      name: 'Samuel Jackson',
-    },
-    {
-      name: 'Pepe',
-    },
-    {
-      name: 'Nenem',
-    },
-  ];
+type Props = {
+  room: Room;
+  setCurrentTab: React.Dispatch<React.SetStateAction<SidebarStatus>>;
+};
 
+function ChannelTab({ room, setCurrentTab }: Props) {
   return (
     <GridItem colSpan={2} bg='gray.900' p='0px 22px'>
       <Grid templateRows='repeat(24, 1fr)' minH='100vh'>
         <GridItem rowSpan={2} alignSelf='center'>
-          <Button variant='link'>
+          <Button variant='link' onClick={() => setCurrentTab('AllChannels')}>
             <Icon as={FaChevronLeft} marginRight='20px' />
             All channels
           </Button>
@@ -43,12 +32,11 @@ function ChannelTab() {
         <GridItem rowSpan={5} alignSelf='center'>
           <Box>
             <Text fontWeight='700' fontSize='18px'>
-              FRONT-END DEVELOPERS
+              {room?.name}
             </Text>
             <br />
             <Text fontWeight='400' fontSize='18px'>
-              Pellentesque sagittis elit enim, sit amet ultrices tellus accumsan
-              quis.
+              {room?.description}
             </Text>
           </Box>
         </GridItem>
@@ -57,7 +45,7 @@ function ChannelTab() {
             <Text fontWeight='700' fontSize='18px' marginBottom='24px'>
               MEMBERS
             </Text>
-            {users.map(({ name }) => (
+            {room?.participants?.map(({ name }) => (
               <Box
                 display='flex'
                 flexDirection='row'

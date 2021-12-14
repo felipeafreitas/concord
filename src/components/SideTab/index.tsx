@@ -1,12 +1,21 @@
+import { Room } from 'types/Room';
+import { SidebarStatus } from 'types/SidebarStatus';
 import AllChannels from './AllChannels';
 import ChannelTab from './ChannelTab';
 
-type SideTabProps = {
+type Props = {
   currentTab: string;
+  room: Room;
+  rooms: Room[];
+  setCurrentTab: React.Dispatch<React.SetStateAction<SidebarStatus>>;
 };
 
-function SideTab({ currentTab }: SideTabProps) {
-  return currentTab === 'AllChannels' ? <AllChannels /> : <ChannelTab />;
+function Sidebar({ currentTab, rooms, room, setCurrentTab }: Props) {
+  return currentTab === 'AllChannels' ? (
+    <AllChannels rooms={rooms} />
+  ) : (
+    <ChannelTab room={room} setCurrentTab={setCurrentTab} />
+  );
 }
 
-export default SideTab;
+export default Sidebar;

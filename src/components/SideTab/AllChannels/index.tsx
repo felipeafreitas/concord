@@ -9,16 +9,14 @@ import {
   InputLeftElement,
   Text,
 } from '@chakra-ui/react';
+import { Room } from 'types/Room';
 import MenuDropdown from '../../MenuDropdown';
 
-function AllChannels() {
-  const channels = [
-    'Frontend Developers',
-    'Random',
-    'Backend',
-    'Cats and Dogs',
-  ];
+type Props = {
+  rooms: Room[];
+};
 
+function AllChannels({ rooms }: Props) {
   return (
     <GridItem colSpan={2} bg='gray.900' p='0px 22px'>
       <Grid templateRows='repeat(24, 1fr)' minH='100vh'>
@@ -41,7 +39,7 @@ function AllChannels() {
             <Input placeholder='Search' />
           </InputGroup>
           <Box w='100%'>
-            {channels.map((channel) => (
+            {rooms.map(({ name }) => (
               <Box
                 display='flex'
                 flexDirection='row'
@@ -59,7 +57,7 @@ function AllChannels() {
                   fontSize='18px'
                   textTransform='uppercase'
                 >
-                  {channel}
+                  {name}
                 </Text>
               </Box>
             ))}
