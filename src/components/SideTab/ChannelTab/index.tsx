@@ -21,18 +21,26 @@ type Props = {
 
 function ChannelTab({ room, setCurrentTab }: Props) {
   return (
-    <GridItem colSpan={2} bg='gray.900' p='0px 22px'>
+    <GridItem colSpan={3} bg='gray.900'>
       <Grid templateRows='repeat(24, 1fr)' minH='100vh'>
-        <GridItem rowSpan={2} alignSelf='center'>
+        <GridItem
+          rowSpan={2}
+          boxShadow='0px 4px 4px rgba(0, 0, 0, 0.25)'
+          display='flex'
+          justifyContent='space-between'
+          alignItems='center'
+          height='100%'
+          p='0px 22px'
+        >
           <Button variant='link' onClick={() => setCurrentTab('AllChannels')}>
             <Icon as={FaChevronLeft} marginRight='20px' />
             All channels
           </Button>
         </GridItem>
-        <GridItem rowSpan={5} alignSelf='center'>
-          <Box>
+        <GridItem rowSpan={6} alignSelf='flex-start' p='0px 22px'>
+          <Box marginTop='25px'>
             <Text fontWeight='700' fontSize='18px'>
-              {room?.name}
+              {room?.name?.toUpperCase()}
             </Text>
             <br />
             <Text fontWeight='400' fontSize='18px'>
@@ -40,7 +48,7 @@ function ChannelTab({ room, setCurrentTab }: Props) {
             </Text>
           </Box>
         </GridItem>
-        <GridItem rowSpan={15}>
+        <GridItem rowSpan={14} p='0px 22px'>
           <Box w='100%'>
             <Text fontWeight='700' fontSize='18px' marginBottom='24px'>
               MEMBERS
@@ -51,6 +59,7 @@ function ChannelTab({ room, setCurrentTab }: Props) {
                 flexDirection='row'
                 marginBottom='20px'
                 alignItems='center'
+                key={name}
               >
                 <Image
                   src={userPic}

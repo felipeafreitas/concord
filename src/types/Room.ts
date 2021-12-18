@@ -5,4 +5,5 @@ export type Room = {
   description: string;
   participants: [User];
   messages: [string];
+  _id: string;
 };

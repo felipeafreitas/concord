@@ -249,9 +249,9 @@ function EditProfileCard() {
               >
                 Save
               </Button>
+              {error && <Text>Something went wrong</Text>}
             </Form>
           )}
-          {error && <Text>Something went wrong</Text>}
         </Formik>
       </Grid>
     </Container>

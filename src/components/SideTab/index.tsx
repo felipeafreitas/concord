@@ -12,7 +12,7 @@ type Props = {
 
 function Sidebar({ currentTab, rooms, room, setCurrentTab }: Props) {
   return currentTab === 'AllChannels' ? (
-    <AllChannels rooms={rooms} />
+    <AllChannels rooms={rooms} setCurrentTab={setCurrentTab} />
   ) : (
     <ChannelTab room={room} setCurrentTab={setCurrentTab} />
   );

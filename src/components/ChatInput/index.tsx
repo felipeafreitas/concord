@@ -17,11 +17,11 @@ type Props = {
 function ChatInput({ message, handleMessage, sendMessage }: Props) {
   return (
     <GridItem
-      rowSpan={2}
+      rowSpan={3}
       alignSelf='center'
       justifySelf='center'
       w='100%'
-      p='0px 22px 0px 70px'
+      p='0px 70px 0px 70px'
     >
       <InputGroup size='lg'>
         <Input

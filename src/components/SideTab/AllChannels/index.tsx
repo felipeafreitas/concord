@@ -8,17 +8,31 @@ import {
   InputGroup,
   InputLeftElement,
   Text,
+  useDisclosure,
 } from '@chakra-ui/react';
+import CreateRoomModal from 'components/CreateRoomModal';
+import { useNavigate } from 'react-router-dom';
 import { Room } from 'types/Room';
+import { SidebarStatus } from 'types/SidebarStatus';
 import MenuDropdown from '../../MenuDropdown';
 
 type Props = {
   rooms: Room[];
+  setCurrentTab: React.Dispatch<React.SetStateAction<SidebarStatus>>;
 };
 
-function AllChannels({ rooms }: Props) {
+function AllChannels({ rooms, setCurrentTab }: Props) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const navigate = useNavigate();
+
+  const onChannelChange = (id: string) => {
+    setCurrentTab('CurrentChannel');
+    navigate(`/chat/${id}`);
+  };
+
   return (
-    <GridItem colSpan={2} bg='gray.900' p='0px 22px'>
+    <GridItem colSpan={3} bg='gray.900' p='0px 22px'>
       <Grid templateRows='repeat(24, 1fr)' minH='100vh'>
         <GridItem
           rowSpan={2}
@@ -29,8 +43,13 @@ function AllChannels({ rooms }: Props) {
           <Text fontWeight='700' fontSize='18px'>
             Channels
           </Text>
-          <Button boxSize='32px'>
+          <Button boxSize='32px' onClick={onOpen}>
             <AddIcon />
+            <CreateRoomModal
+              isOpen={isOpen}
+              onClose={onClose}
+              onOpen={onOpen}
+            />
           </Button>
         </GridItem>
         <GridItem rowSpan={20}>
@@ -39,26 +58,28 @@ function AllChannels({ rooms }: Props) {
             <Input placeholder='Search' />
           </InputGroup>
           <Box w='100%'>
-            {rooms.map(({ name }) => (
+            {rooms.map(({ name, _id }) => (
               <Box
                 display='flex'
                 flexDirection='row'
                 marginBottom='20px'
                 alignItems='center'
               >
-                <Box
-                  borderRadius='lg'
-                  boxSize='42px'
-                  marginRight='10px'
-                  bg='gray.600'
-                />
-                <Text
-                  fontWeight='700'
-                  fontSize='18px'
-                  textTransform='uppercase'
-                >
-                  {name}
-                </Text>
+                <Button variant='link' onClick={() => onChannelChange(_id)}>
+                  <Box
+                    borderRadius='lg'
+                    boxSize='42px'
+                    marginRight='10px'
+                    bg='gray.600'
+                  />
+                  <Text
+                    fontWeight='700'
+                    fontSize='18px'
+                    textTransform='uppercase'
+                  >
+                    {name}
+                  </Text>
+                </Button>
               </Box>
             ))}
           </Box>

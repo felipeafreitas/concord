@@ -29,7 +29,7 @@ function ChatMessage({ message, timestamp, author }: Message) {
             color='gray.100'
             marginRight='20px'
           >
-            {author}
+            {author.name}
           </Text>
           <Text fontWeight='500' fontSize='14px' color='gray.100'>
             {moment(timestamp).calendar()}
