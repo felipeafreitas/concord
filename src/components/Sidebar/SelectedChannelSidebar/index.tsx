@@ -1,17 +1,10 @@
-import {
-  Box,
-  Button,
-  GridItem,
-  Icon,
-  Text,
-  Image,
-} from '@chakra-ui/react';
+import { Box, Button, GridItem, Icon, Text } from '@chakra-ui/react';
 import MenuDropdown from '../../MenuDropdown';
 
 import { FaChevronLeft } from 'react-icons/fa';
-import userPic from '../../../assets/img/profile.jpeg';
 import { Room } from 'types/Room';
 import { SidebarStatus } from 'types/SidebarStatus';
+import SidebarListItem from './ParticipantItem';
 
 type Props = {
   room: Room;
@@ -28,14 +21,13 @@ function SelectedChannelSidebar({ room, setCurrentTab }: Props) {
         justifyContent='space-between'
         alignItems='center'
         height='100%'
-        p='0px 22px'
       >
         <Button variant='link' onClick={() => setCurrentTab('AllChannels')}>
           <Icon as={FaChevronLeft} marginRight='20px' />
           All channels
         </Button>
       </GridItem>
-      <GridItem rowSpan={6} alignSelf='flex-start' p='0px 22px'>
+      <GridItem rowSpan={6} alignSelf='flex-start'>
         <Box marginTop='25px'>
           <Text fontWeight='700' fontSize='18px'>
             {room?.name?.toUpperCase()}
@@ -46,27 +38,13 @@ function SelectedChannelSidebar({ room, setCurrentTab }: Props) {
           </Text>
         </Box>
       </GridItem>
-      <GridItem rowSpan={14} p='0px 22px'>
+      <GridItem rowSpan={14}>
         <Box w='100%'>
           <Text fontWeight='700' fontSize='18px' marginBottom='24px'>
             MEMBERS
           </Text>
           {room?.participants?.map(({ name }) => (
-            <Box
-              display='flex'
-              flexDirection='row'
-              marginBottom='20px'
-              alignItems='center'
-              key={name}
-            >
-              <Image
-                src={userPic}
-                borderRadius='lg'
-                boxSize='42px'
-                marginRight='10px'
-              />
-              <Text>{name}</Text>
-            </Box>
+            <SidebarListItem name={name as string} key={name} />
           ))}
         </Box>
       </GridItem>

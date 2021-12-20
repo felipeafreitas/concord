@@ -22,7 +22,7 @@ function Chat() {
 
   let { roomId } = useParams();
 
-  const [socket, setSocket] = useState<Socket>({} as Socket);
+  const [socket, setSocket] = useState<Socket>();
   const [currentTab, setCurrentTab] = useState<SidebarStatus>('CurrentChannel');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([] as Message[]);
@@ -52,7 +52,7 @@ function Chat() {
 
   useEffect(() => {
     const joinRoom = (room: { user: string; room: string }) => {
-      socket.emit('join-room', room);
+      socket?.emit('join-room', room);
     };
 
     if (user && socket && rooms.length) {
@@ -96,13 +96,13 @@ function Chat() {
         rooms={rooms}
         setCurrentTab={setCurrentTab}
       />
-      <GridItem colSpan={17} bg='gray.700'>
+      <GridItem colSpan={17} colorSchema='gray.700'>
         <ChatView
           messages={messages}
           room={room}
           message={message}
           setMessage={setMessage}
-          socket={socket}
+          socket={socket as Socket}
           setMessages={setMessages}
         />
       </GridItem>

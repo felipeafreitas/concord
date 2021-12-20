@@ -13,8 +13,8 @@ type Props = {
 
 function Sidebar({ currentTab, rooms, room, setCurrentTab }: Props) {
   return (
-    <GridItem colSpan={3} bg='gray.900'>
-      <Grid templateRows='repeat(24, 1fr)' minH='100vh'>
+    <GridItem colSpan={3} colorSchema='gray.900'>
+      <Grid templateRows='repeat(24, 1fr)' minH='100vh' p='0px 22px'>
         {currentTab === 'AllChannels' ? (
           <AllChannelsSidebar rooms={rooms} setCurrentTab={setCurrentTab} />
         ) : (
