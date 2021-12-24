@@ -12,19 +12,19 @@ import {
   FormControl,
   InputGroup,
   FormErrorMessage,
+  Avatar,
 } from '@chakra-ui/react';
 import { Field, Form, Formik } from 'formik';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import api from '../../api';
 
-import ProfilePic from '../../assets/img/profile.jpeg';
 import useAuth from '../../hooks/useAuth';
 import { User } from '../../types/User';
 
 function EditProfileCard() {
   const [error, setError] = useState(false);
-  const { retrieve } = useAuth();
+  const { retrieve, user } = useAuth();
 
   const navigate = useNavigate();
 
@@ -70,17 +70,10 @@ function EditProfileCard() {
             justifyContent='center'
             alignItems='center'
           >
-            <AiFillCamera />
+            {/* <AiFillCamera /> */}
           </Box>
-          <Box>
-            <Image
-              src={ProfilePic}
-              boxSize='72px'
-              borderRadius='xl'
-              position='absolute'
-              top='0'
-              left='0'
-            />
+          <Box height='100%' display='flex' alignItems='center'>
+            <Avatar name={user?.name as string} />
           </Box>
         </Box>
         <Button variant='link'>CHANGE PHOTO</Button>

@@ -6,13 +6,12 @@ import {
   Text,
   Tr,
   Td,
-  Image,
   Button,
   Box,
+  Avatar,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-import ProfilePic from '../../assets/img/profile.jpeg';
 import useAuth from '../../hooks/useAuth';
 import { Description, Title } from './styles';
 
@@ -21,7 +20,7 @@ function ProfileCard() {
 
   return (
     <Container borderWidth='1px' borderRadius='lg'>
-      <Table variant='simple' size="lg">
+      <Table variant='simple' size='lg'>
         <TableCaption placement='top'>
           <Box
             display='flex'
@@ -47,7 +46,7 @@ function ProfileCard() {
               <Title>PHOTO</Title>
             </Td>
             <Td>
-              <Image src={ProfilePic} borderRadius='lg' boxSize='72px' />
+              <Avatar name={user?.name as string} />
             </Td>
           </Tr>
           <Tr>

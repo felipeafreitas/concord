@@ -14,22 +14,33 @@ function Layout() {
   const shouldShow = !noShowRoutes.includes(pathname);
 
   return (
-    <Box textAlign='center' fontSize='xl'>
-      <Grid minH='100vh'>
-        <Box
-          display='flex'
-          alignItems='flex-start'
-          justifyContent='space-between'
-          padding='20px'
-        >
-          {shouldShow ? <Logo /> : <div />}
-          <Box display='flex' flexDirection='row'>
-            {shouldShow && user && <MenuDropdown />}
-            <ColorModeSwitcher />
-          </Box>
+    <Box
+      textAlign='center'
+      fontSize='xl'
+      minH='100vh'
+      display='flex'
+      flexDirection='column'
+    >
+      <Box
+        display='flex'
+        alignItems='flex-start'
+        justifyContent='space-between'
+        padding='20px'
+      >
+        {shouldShow ? <Logo /> : <div />}
+        <Box display='flex' flexDirection='row'>
+          {shouldShow && user && <MenuDropdown />}
+          <ColorModeSwitcher />
         </Box>
+      </Box>
+      <Box
+        display='flex'
+        flexGrow='1'
+        alignItems='center'
+        justifyContent='center'
+      >
         <Outlet />
-      </Grid>
+      </Box>
     </Box>
   );
 }

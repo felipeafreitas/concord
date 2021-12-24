@@ -18,7 +18,7 @@ function ChatHeader({ room }: Props) {
       height='100%'
     >
       <Text fontWeight='700' fontSize='18px'>
-        {room.toUpperCase()}
+        {room?.toUpperCase()}
       </Text>
       <ColorModeSwitcher />
     </GridItem>

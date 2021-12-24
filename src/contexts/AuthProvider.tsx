@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { createContext, useEffect, useState } from 'react';
+import getUser from 'utils/services/getUser';
 import api from '../api';
 import { User } from '../types/User';
 
@@ -28,17 +29,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.clear();
   };
 
-  // TODO: Implement SWR
   const retrieve = async () => {
     const token = localStorage.getItem('token');
 
     if (token) {
-      try {
-        const { data } = await api.get(`/user/${token}`);
-        setUser(data.user);
-      } catch (err) {
-        throw err;
-      }
+      const fetchedUser = await getUser(token);
+      setUser(fetchedUser);
     }
   };
 

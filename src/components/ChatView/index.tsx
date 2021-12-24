@@ -3,7 +3,7 @@ import ChatHeader from 'components/ChatHeader';
 import ChatInput from 'components/ChatInput';
 import ChatMessage from 'components/ChatMessage';
 import useAuth from 'hooks/useAuth';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ChatBox } from './styles';
 import { Socket } from 'socket.io-client';
@@ -14,22 +14,15 @@ import { differenceInCalendarDays } from 'date-fns';
 
 type Props = {
   room: Room;
-  messages: Message[];
-  message: string;
-  setMessage: React.Dispatch<React.SetStateAction<string>>;
+  fetchedMessages: Message[];
   socket: Socket;
-  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
 };
 
-function ChatView({
-  room,
-  messages,
-  message,
-  setMessage,
-  socket,
-  setMessages,
-}: Props) {
+function ChatView({ room, fetchedMessages, socket }: Props) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const [messages, setMessages] = useState([] as Message[]);
+  const [message, setMessage] = useState('');
 
   let { roomId } = useParams();
 
@@ -38,6 +31,10 @@ function ChatView({
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  useEffect(() => {
+    setMessages(fetchedMessages);
+  }, [fetchedMessages]);
 
   useEffect(() => {
     const displayMessage = ({ message, author, createdAt, room }: Message) => {
@@ -56,8 +53,8 @@ function ChatView({
   useEffect(() => {
     setTimeout(() => {
       scrollToBottom();
-    }, 500);
-  }, []);
+    }, 0);
+  }, [messages]);
 
   const handleMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
@@ -75,6 +72,7 @@ function ChatView({
       { ...newMessage, createdAt: new Date() },
     ]);
     setMessage('');
+    scrollToBottom();
   };
 
   const flagMessages = (message: Message, index: number, array: Message[]) => {
@@ -91,11 +89,11 @@ function ChatView({
 
   return (
     <Grid templateRows='repeat(24, 1fr)' minH='100vh'>
-      {room?.name && <ChatHeader room={room.name} />}
+      <ChatHeader room={room?.name} />
       <GridItem rowSpan={2} />
       <GridItem
         rowSpan={17}
-        p='0px 70px 0px 70px'
+        p='0px 70px'
         overflow='hidden'
         display='flex'
         flexDirection='column'

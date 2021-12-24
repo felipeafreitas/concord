@@ -8,7 +8,7 @@ import requireAuth from '../../hocs/RequireAuth';
 
 function EditProfile() {
   return (
-    <Container>
+    <Container mb='40px'>
       <Box marginBottom='45px' textAlign='left'>
         <Link to='/profile'>
           <Button variant='link' size='lg' leftIcon={<ChevronLeftIcon />}>

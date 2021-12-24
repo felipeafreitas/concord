@@ -10,7 +10,6 @@ import { Message } from '../types/Message';
 import { User } from '../types/User';
 
 import { useParams } from 'react-router-dom';
-import api from '../api';
 import { Room } from '../types/Room';
 import useAuth from 'hooks/useAuth';
 import Loader from 'components/Loader';
@@ -27,10 +26,8 @@ function Chat() {
 
   const [socket, setSocket] = useState<Socket>();
   const [currentTab, setCurrentTab] = useState<SidebarStatus>('CurrentChannel');
-  const [message, setMessage] = useState('');
-  // const [messages, setMessages] = useState([] as Message[]);
+
   const [room, setRoom] = useState<Room>({} as Room);
-  // const [rooms, setRooms] = useState<Room[]>([] as Room[]);
   const [invalidRoom, setInvalidRoom] = useState(false);
 
   useEffect(() => {
@@ -47,54 +44,29 @@ function Chat() {
   );
 
   const { isLoading: areMessagesLoading, data: messages } = useQuery(
-    'messages',
-    getMessages(roomId)
+    ['messages', roomId],
+    () => getMessages(roomId as string)
   );
 
-  console.log(rooms, messages);
 
-  // useEffect(() => {
-  // const fetchRooms = async () => {
-  //   try {
-  //     const { data } = await api.get('/chat/rooms');
-  //     setRooms(data.data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-  // fetchRooms();
-  // }, []);
+  useEffect(() => {
+    const joinRoom = (room: { user: string; room: string }) => {
+      socket?.emit('join-room', room);
+    };
 
-  // useEffect(() => {
-  // const fetchMessages = async () => {
-  //   try {
-  //     const { data } = await api.get(`/chat/${roomId}/messages`);
-  //     setMessages(data.data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-  //   fetchMessages();
-  // }, [roomId]);
+    if (user && socket && rooms) {
+      const findRoom = rooms.find((room) => room._id === roomId);
 
-  // useEffect(() => {
-  //   const joinRoom = (room: { user: string; room: string }) => {
-  //     socket?.emit('join-room', room);
-  //   };
+      if (!findRoom) {
+        setInvalidRoom(true);
+      } else {
+        setRoom(findRoom);
+        joinRoom({ user: user._id as string, room: roomId as string });
+      }
+    }
+  }, [roomId, rooms, user, socket]);
 
-  //   if (user && socket && rooms.length) {
-  //     const findRoom = rooms.find((room) => room._id === roomId);
-
-  //     if (!findRoom) {
-  //       setInvalidRoom(true);
-  //     } else {
-  //       setRoom(findRoom);
-  //       joinRoom({ user: user._id as string, room: roomId as string });
-  //     }
-  //   }
-  // }, [roomId, rooms, user, socket]);
-
-  if (!user)
+  if (areRoomsLoading || areMessagesLoading || !user)
     return (
       <Grid minH='100vh'>
         <Loader />
@@ -105,22 +77,19 @@ function Chat() {
 
   return (
     <Grid templateColumns='repeat(20, 1fr)' minH='100vh'>
-      {/* <SideTab
+      <SideTab
         currentTab={currentTab}
         room={room}
-        rooms={rooms}
+        rooms={rooms as Room[]}
         setCurrentTab={setCurrentTab}
       />
       <GridItem colSpan={17} colorSchema='gray.700'>
         <ChatView
-          messages={messages}
+          fetchedMessages={messages as Message[]}
           room={room}
-          message={message}
-          setMessage={setMessage}
           socket={socket as Socket}
-          setMessages={setMessages}
         />
-      </GridItem> */}
+      </GridItem>
     </Grid>
   );
 }

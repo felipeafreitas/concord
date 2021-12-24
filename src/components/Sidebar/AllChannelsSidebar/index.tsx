@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react';
 import CreateRoomModal from 'components/CreateRoomModal';
 import { useEffect, useState } from 'react';
+import { QueryClient, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { Room } from 'types/Room';
 import { SidebarStatus } from 'types/SidebarStatus';
@@ -28,11 +29,14 @@ function AllChannelsSidebar({ rooms, setCurrentTab }: Props) {
   const [filteredRooms, setFilteredRooms] = useState<Room[]>(rooms);
   const [search, setSearch] = useState('');
 
+  const queryClient = useQueryClient();
+
   const navigate = useNavigate();
 
   const onChannelChange = (id: string) => {
     setCurrentTab('CurrentChannel');
     navigate(`/chat/${id}`);
+    queryClient.invalidateQueries('messages');
   };
 
   useEffect(() => {

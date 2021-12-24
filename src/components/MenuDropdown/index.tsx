@@ -9,6 +9,7 @@ import {
   Divider,
   MenuList,
   Button,
+  Avatar,
 } from '@chakra-ui/react';
 
 import { IoPersonCircle } from 'react-icons/io5';
@@ -35,12 +36,13 @@ function MenuDropdown() {
       justifySelf='left'
     >
       <Menu>
-        <Image
+        <Avatar name={user?.name as string} />
+        {/* <Image
           src={userPic}
           borderRadius='lg'
           boxSize='32px'
           marginRight='10px'
-        />
+        /> */}
         <MenuButton as={Button} variant='ghost'>
           <Text fontWeight='700' fontSize='12px'>
             {user?.name} <TriangleDownIcon marginLeft='20px' />
