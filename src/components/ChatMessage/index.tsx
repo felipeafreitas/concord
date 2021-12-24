@@ -1,41 +1,63 @@
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Divider, Text } from '@chakra-ui/react';
 import { Message } from '../../types/Message';
-import moment from 'moment';
 import Avatar from 'components/Avatar';
+import { format, formatRelative } from 'date-fns';
 
-function ChatMessage({ message, timestamp, author }: Message) {
+function ChatMessage({ message, createdAt, author, isFirstOfTheDay }: Message) {
   return (
-    <Box
-      display='flex'
-      flexDirection='row'
-      marginBottom='35px'
-      alignItems='flex-start'
-    >
-      <Avatar name={author.name as string} />
-      <Box marginLeft='20px'>
+    <>
+      {isFirstOfTheDay && (
         <Box
           display='flex'
           flexDirection='row'
-          marginBottom='5px'
+          justifyContent='center'
           alignItems='center'
+          marginBottom='35px'
         >
+          <Divider orientation='horizontal' />
           <Text
-            fontWeight='700'
-            fontSize='18px'
-            colorScheme='gray.100'
-            marginRight='20px'
+            margin='20px'
+            whiteSpace='nowrap'
+            fontSize='12px'
+            fontWeight={600}
           >
-            {author.name}
+            {format(new Date(createdAt), 'PP')}
           </Text>
-          <Text fontWeight='500' fontSize='14px' colorScheme='gray.100'>
-            {moment(timestamp).calendar()}
+          <Divider orientation='horizontal' />
+        </Box>
+      )}
+      <Box
+        display='flex'
+        flexDirection='row'
+        marginBottom='35px'
+        alignItems='flex-start'
+      >
+        <Avatar name={author.name as string} />
+        <Box marginLeft='20px'>
+          <Box
+            display='flex'
+            flexDirection='row'
+            marginBottom='5px'
+            alignItems='center'
+          >
+            <Text
+              fontWeight='700'
+              fontSize='18px'
+              colorScheme='gray.100'
+              marginRight='20px'
+            >
+              {author.name}
+            </Text>
+            <Text fontWeight='500' fontSize='14px' colorScheme='gray.100'>
+              {formatRelative(new Date(createdAt), new Date())}
+            </Text>
+          </Box>
+          <Text fontWeight='500' fontSize='18px' colorScheme='gray.100'>
+            {message}
           </Text>
         </Box>
-        <Text fontWeight='500' fontSize='18px' colorScheme='gray.100'>
-          {message}
-        </Text>
       </Box>
-    </Box>
+    </>
   );
 }
 

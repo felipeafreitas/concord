@@ -10,6 +10,7 @@ import { Socket } from 'socket.io-client';
 import { Message } from 'types/Message';
 import { Room } from 'types/Room';
 import { User } from 'types/User';
+import { differenceInCalendarDays, differenceInDays } from 'date-fns';
 
 type Props = {
   room: Room;
@@ -39,11 +40,10 @@ function ChatView({
   };
 
   useEffect(() => {
-    const displayMessage = ({ message, author, timestamp, room }: Message) => {
-      setMessages((prevState) => [
-        ...prevState,
-        { message, author, timestamp, room },
-      ]);
+    const displayMessage = ({ message, author, createdAt, room }: Message) => {
+      setMessages((prevState) =>
+        [...prevState, { message, author, createdAt, room }].map(flagMessages)
+      );
     };
 
     if (socket) {
@@ -72,9 +72,21 @@ function ChatView({
     socket.emit('send-message', newMessage);
     setMessages((prevState) => [
       ...prevState,
-      { ...newMessage, timestamp: new Date() },
+      { ...newMessage, createdAt: new Date() },
     ]);
     setMessage('');
+  };
+
+  const flagMessages = (message: Message, index: number, array: Message[]) => {
+    if (
+      differenceInCalendarDays(
+        new Date(message.createdAt),
+        new Date(array[index - 1]?.createdAt)
+      ) >= 1
+    ) {
+      message.isFirstOfTheDay = true;
+    }
+    return message;
   };
 
   return (
@@ -108,22 +120,18 @@ function ChatView({
             },
           }}
         >
-          {messages.map(({ message, timestamp, author }) => (
-            <ChatMessage
-              message={message}
-              key={String(timestamp)}
-              timestamp={timestamp}
-              author={author}
-            />
-          ))}
+          {messages
+            .map(flagMessages)
+            .map(({ message, createdAt, author, isFirstOfTheDay }) => (
+              <ChatMessage
+                message={message}
+                key={String(createdAt)}
+                createdAt={createdAt}
+                author={author}
+                isFirstOfTheDay={isFirstOfTheDay}
+              />
+            ))}
           <div ref={messagesEndRef} />
-          <Stack flexDirection='row' alignItems='center' margin='40px 0px'>
-            {/* <Divider orientation='horizontal' />
-              <Text margin='20px' whiteSpace='nowrap'>
-                August 3, 2020
-              </Text>
-              <Divider orientation='horizontal' /> */}
-          </Stack>
         </ChatBox>
       </GridItem>
       <ChatInput
