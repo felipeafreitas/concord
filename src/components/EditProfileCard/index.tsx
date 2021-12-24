@@ -3,7 +3,6 @@ import { AiFillCamera } from 'react-icons/ai';
 import {
   Container,
   Box,
-  Image,
   Text,
   Input,
   Grid,

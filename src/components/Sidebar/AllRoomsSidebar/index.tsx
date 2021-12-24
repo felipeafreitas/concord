@@ -6,24 +6,25 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  SimpleGrid,
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
 import CreateRoomModal from 'components/CreateRoomModal';
 import { useEffect, useState } from 'react';
-import { QueryClient, useQueryClient } from 'react-query';
+import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { Room } from 'types/Room';
 import { SidebarStatus } from 'types/SidebarStatus';
 import MenuDropdown from '../../MenuDropdown';
-import SidebarListItem from '../SelectedChannelSidebar/ParticipantItem';
+import SidebarListItem from '../SidebarItem';
 
 type Props = {
   rooms: Room[];
   setCurrentTab: React.Dispatch<React.SetStateAction<SidebarStatus>>;
 };
 
-function AllChannelsSidebar({ rooms, setCurrentTab }: Props) {
+function AllRoomsSidebar({ rooms, setCurrentTab }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [filteredRooms, setFilteredRooms] = useState<Room[]>(rooms);
@@ -75,18 +76,17 @@ function AllChannelsSidebar({ rooms, setCurrentTab }: Props) {
             onChange={(e) => setSearch(e.target.value)}
           />
         </InputGroup>
-        <Box
-          w='100%'
-          display='flex'
-          flexDirection='column'
-          alignItems='flex-start'
-        >
+        <SimpleGrid spacing='20px'>
           {filteredRooms.map(({ name, _id }) => (
-            <Button variant='link' onClick={() => onChannelChange(_id)}>
+            <Button
+              variant='link'
+              onClick={() => onChannelChange(_id)}
+              justifyContent='left'
+            >
               <SidebarListItem name={name.toUpperCase()} />
             </Button>
           ))}
-        </Box>
+        </SimpleGrid>
       </GridItem>
       <GridItem rowSpan={2} alignSelf='center' justifySelf='center'>
         <MenuDropdown />
@@ -95,4 +95,4 @@ function AllChannelsSidebar({ rooms, setCurrentTab }: Props) {
   );
 }
 
-export default AllChannelsSidebar;
+export default AllRoomsSidebar;

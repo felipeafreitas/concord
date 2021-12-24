@@ -1,7 +1,6 @@
 import { TriangleDownIcon } from '@chakra-ui/icons';
 import {
   Box,
-  Image,
   Text,
   Menu,
   MenuButton,
@@ -15,7 +14,6 @@ import {
 import { IoPersonCircle } from 'react-icons/io5';
 import { MdGroup, MdLogout } from 'react-icons/md';
 import { Link, useNavigate } from 'react-router-dom';
-import userPic from '../../assets/img/profile.jpeg';
 import useAuth from '../../hooks/useAuth';
 
 function MenuDropdown() {

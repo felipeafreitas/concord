@@ -18,6 +18,7 @@ import ChatView from 'components/ChatView';
 import getRooms from 'utils/services/getRooms';
 import { useQuery } from 'react-query';
 import getMessages from 'utils/services/getMessages';
+import { useColorModeValue } from '@chakra-ui/react';
 
 function Chat() {
   const { user }: { user: User } = useAuth();
@@ -48,7 +49,6 @@ function Chat() {
     () => getMessages(roomId as string)
   );
 
-
   useEffect(() => {
     const joinRoom = (room: { user: string; room: string }) => {
       socket?.emit('join-room', room);
@@ -66,6 +66,8 @@ function Chat() {
     }
   }, [roomId, rooms, user, socket]);
 
+  const bg = useColorModeValue('gray.100', 'gray.900');
+
   if (areRoomsLoading || areMessagesLoading || !user)
     return (
       <Grid minH='100vh'>
@@ -77,13 +79,15 @@ function Chat() {
 
   return (
     <Grid templateColumns='repeat(20, 1fr)' minH='100vh'>
-      <SideTab
-        currentTab={currentTab}
-        room={room}
-        rooms={rooms as Room[]}
-        setCurrentTab={setCurrentTab}
-      />
-      <GridItem colSpan={17} colorSchema='gray.700'>
+      <GridItem colSpan={4} bg={bg}>
+        <SideTab
+          currentTab={currentTab}
+          room={room}
+          rooms={rooms as Room[]}
+          setCurrentTab={setCurrentTab}
+        />
+      </GridItem>
+      <GridItem colSpan={16}>
         <ChatView
           fetchedMessages={messages as Message[]}
           room={room}

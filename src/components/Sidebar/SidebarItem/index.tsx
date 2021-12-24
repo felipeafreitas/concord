@@ -5,12 +5,11 @@ type Props = {
   name: string;
 };
 
-function SidebarListItem({ name }: Props) {
+function SidebarItem({ name }: Props) {
   return (
     <Box
       display='flex'
       flexDirection='row'
-      marginBottom='20px'
       alignItems='center'
       key={name}
     >
@@ -20,4 +19,4 @@ function SidebarListItem({ name }: Props) {
   );
 }
 
-export default SidebarListItem;
+export default SidebarItem;

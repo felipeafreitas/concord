@@ -11,7 +11,6 @@ function ChatHeader({ room }: Props) {
     <GridItem
       rowSpan={2}
       p='0px 22px 0px 70px'
-      boxShadow='0px 4px 4px rgba(0, 0, 0, 0.25)'
       display='flex'
       justifyContent='space-between'
       alignItems='center'

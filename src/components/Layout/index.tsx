@@ -1,4 +1,4 @@
-import { Box, Grid } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
 import useAuth from '../../hooks/useAuth';

@@ -5,6 +5,7 @@ import {
   InputRightElement,
   Button,
   Icon,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { IoMdSend } from 'react-icons/io';
 
@@ -15,6 +16,8 @@ type Props = {
 };
 
 function ChatInput({ message, handleMessage, sendMessage }: Props) {
+  const bg = useColorModeValue('white', 'gray.600');
+
   return (
     <GridItem
       rowSpan={3}
@@ -27,8 +30,9 @@ function ChatInput({ message, handleMessage, sendMessage }: Props) {
         <Input
           placeholder='Type a message here'
           border='none'
-          bg='gray.600'
+          boxShadow='base'
           value={message}
+          bg={bg}
           onChange={handleMessage}
           onKeyPress={(e) => {
             if (e.key === 'Enter') sendMessage();

@@ -1,26 +1,32 @@
-import { Box, Button, GridItem, Icon, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  GridItem,
+  Icon,
+  SimpleGrid,
+  Text,
+} from '@chakra-ui/react';
 import MenuDropdown from '../../MenuDropdown';
 
 import { FaChevronLeft } from 'react-icons/fa';
 import { Room } from 'types/Room';
 import { SidebarStatus } from 'types/SidebarStatus';
-import SidebarListItem from './ParticipantItem';
+import SidebarItem from '../SidebarItem';
 
 type Props = {
   room: Room;
   setCurrentTab: React.Dispatch<React.SetStateAction<SidebarStatus>>;
 };
 
-function SelectedChannelSidebar({ room, setCurrentTab }: Props) {
+function SelectedRoomSidebar({ room, setCurrentTab }: Props) {
   return (
     <>
       <GridItem
-        rowSpan={2}
-        boxShadow='0px 4px 4px rgba(0, 0, 0, 0.25)'
         display='flex'
         justifyContent='space-between'
         alignItems='center'
         height='100%'
+        rowSpan={2}
       >
         <Button variant='link' onClick={() => setCurrentTab('AllChannels')}>
           <Icon as={FaChevronLeft} marginRight='20px' />
@@ -43,9 +49,11 @@ function SelectedChannelSidebar({ room, setCurrentTab }: Props) {
           <Text fontWeight='700' fontSize='18px' marginBottom='24px'>
             MEMBERS
           </Text>
-          {room?.participants?.map(({ name }) => (
-            <SidebarListItem name={name as string} key={name} />
-          ))}
+          <SimpleGrid spacing='20px'>
+            {room?.participants?.map(({ name }) => (
+              <SidebarItem name={name as string} key={name} />
+            ))}
+          </SimpleGrid>
         </Box>
       </GridItem>
       <GridItem rowSpan={2} alignSelf='center' justifySelf='center'>
@@ -55,4 +63,4 @@ function SelectedChannelSidebar({ room, setCurrentTab }: Props) {
   );
 }
 
-export default SelectedChannelSidebar;
+export default SelectedRoomSidebar;
