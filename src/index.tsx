@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { App } from './App';
 import { AuthProvider } from './contexts/AuthProvider';
 import '@fontsource/noto-sans';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 const fonts = {
   body: 'Noto Sans',
@@ -11,12 +12,16 @@ const fonts = {
 
 const theme = extendTheme({ fonts });
 
+const queryClient = new QueryClient();
+
 ReactDOM.render(
   <React.StrictMode>
     <ColorModeScript />
     <ChakraProvider theme={theme}>
       <AuthProvider>
-        <App />
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
       </AuthProvider>
     </ChakraProvider>
   </React.StrictMode>,

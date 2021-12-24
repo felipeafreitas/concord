@@ -1,4 +1,4 @@
-import { Grid, GridItem, Stack } from '@chakra-ui/react';
+import { Grid, GridItem } from '@chakra-ui/react';
 import ChatHeader from 'components/ChatHeader';
 import ChatInput from 'components/ChatInput';
 import ChatMessage from 'components/ChatMessage';
@@ -10,7 +10,7 @@ import { Socket } from 'socket.io-client';
 import { Message } from 'types/Message';
 import { Room } from 'types/Room';
 import { User } from 'types/User';
-import { differenceInCalendarDays, differenceInDays } from 'date-fns';
+import { differenceInCalendarDays } from 'date-fns';
 
 type Props = {
   room: Room;
