@@ -101,6 +101,13 @@ $ npm install
 $ npm start
 ```
 
+## Next Improvements
+- Image Uploader
+- Live chat (online, está digitando...)
+- Responsividade
+- React Cache Strategies (Optimizations Cache // useMemo...)
+- Social Login
+
 ## Contact
 
 - [LinkedIn](https://www.linkedin.com/in/affreitas/)
