@@ -103,8 +103,8 @@ $ npm start
 
 ## Next Improvements
 - Image Uploader
-- Live chat (online, está digitando...)
-- Responsividade
+- Live chat (user online, typing...)
+- Responsive Design
 - React Cache Strategies (Optimizations Cache // useMemo...)
 - Social Login
 
