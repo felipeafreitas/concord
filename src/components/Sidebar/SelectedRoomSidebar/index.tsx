@@ -56,7 +56,7 @@ function SelectedRoomSidebar({ room, setCurrentTab }: Props) {
           </SimpleGrid>
         </Box>
       </GridItem>
-      <GridItem rowSpan={2} alignSelf='center' justifySelf='center'>
+      <GridItem rowSpan={2}>
         <MenuDropdown />
       </GridItem>
     </>

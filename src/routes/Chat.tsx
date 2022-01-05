@@ -79,7 +79,7 @@ function Chat() {
 
   return (
     <Grid templateColumns='repeat(20, 1fr)' minH='100vh'>
-      <GridItem colSpan={4} bg={bg}>
+      <GridItem colSpan={3} bg={bg}>
         <SideTab
           currentTab={currentTab}
           room={room}
@@ -87,7 +87,7 @@ function Chat() {
           setCurrentTab={setCurrentTab}
         />
       </GridItem>
-      <GridItem colSpan={16}>
+      <GridItem colSpan={17}>
         <ChatView
           fetchedMessages={messages as Message[]}
           room={room}

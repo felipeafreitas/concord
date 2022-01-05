@@ -87,7 +87,7 @@ function AllRoomsSidebar({ rooms, setCurrentTab }: Props) {
           ))}
         </SimpleGrid>
       </GridItem>
-      <GridItem rowSpan={2} alignSelf='center' justifySelf='center'>
+      <GridItem rowSpan={2}>
         <MenuDropdown />
       </GridItem>
     </>
