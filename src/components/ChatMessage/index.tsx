@@ -4,7 +4,6 @@ import Avatar from 'components/Avatar';
 import { format, formatRelative } from 'date-fns';
 
 function ChatMessage({ message, createdAt, author, isFirstOfTheDay }: Message) {
-  console.log(createdAt);
 
   return (
     <>

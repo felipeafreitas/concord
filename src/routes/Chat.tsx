@@ -79,7 +79,7 @@ function Chat() {
 
   return (
     <Grid templateColumns='repeat(20, 1fr)' minH='100vh'>
-      <GridItem colSpan={3} bg={bg}>
+      <GridItem colSpan={3} bg={bg} minWidth={250}>
         <SideTab
           currentTab={currentTab}
           room={room}
