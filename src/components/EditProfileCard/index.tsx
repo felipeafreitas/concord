@@ -83,11 +83,11 @@ function EditProfileCard() {
             actions.setSubmitting(false);
           }}
           initialValues={{
-            email: '',
+            email: user?.email,
             password: '',
-            bio: '',
-            phone: '',
-            name: '',
+            bio: user?.bio,
+            phone: user?.phone,
+            name: user?.email,
           }}
           validate={(values) => {
             const errors = {} as any;

@@ -4,6 +4,8 @@ import Avatar from 'components/Avatar';
 import { format, formatRelative } from 'date-fns';
 
 function ChatMessage({ message, createdAt, author, isFirstOfTheDay }: Message) {
+  console.log(createdAt);
+
   return (
     <>
       {isFirstOfTheDay && (
@@ -49,7 +51,7 @@ function ChatMessage({ message, createdAt, author, isFirstOfTheDay }: Message) {
               {author.name}
             </Text>
             <Text fontWeight='500' fontSize='14px' colorScheme='gray.100'>
-              {formatRelative(new Date(createdAt), new Date())}
+              {createdAt && formatRelative(new Date(createdAt), new Date())}
             </Text>
           </Box>
           <Text fontWeight='500' fontSize='18px' colorScheme='gray.100'>
