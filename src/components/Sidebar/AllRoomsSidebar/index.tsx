@@ -1,6 +1,5 @@
 import { AddIcon, SearchIcon } from '@chakra-ui/icons';
 import {
-  Box,
   Button,
   GridItem,
   Input,

@@ -1,5 +1,4 @@
 import { Button } from '@chakra-ui/button';
-import { AiFillCamera } from 'react-icons/ai';
 import {
   Container,
   Box,

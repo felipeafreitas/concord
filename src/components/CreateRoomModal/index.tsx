@@ -28,7 +28,7 @@ function CreateRoomModal({ isOpen, onOpen, onClose }: props) {
   const onSubmit = async () => {
     console.log(name, description);
     try {
-      const response = await api.post('/chat/room', {
+      await api.post('/chat/room', {
         name,
         description,
       });
